@@ -1,10 +1,11 @@
 package io.github.paulushcgcj.mentorship.models;
 
+import java.math.BigDecimal;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
 
-import java.math.BigDecimal;
+import lombok.*;
 
 @Data
 @NoArgsConstructor

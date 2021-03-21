@@ -30,7 +30,7 @@ The expected message format is :
 
 The possible values for types are:
 
-- **chore** - Some common, mudane task
+- **chore** - Some common, mundane task
 - **ci** - CI Tasks or things related to CI
 - **docs** - Documentation update
 - **feat** - Feature introduction (usually updates the MINOR on SemVer)
@@ -41,6 +41,7 @@ The possible values for types are:
 - **style** - Code style changes
 - **test** - Test introduction or coverage increment
 - **build** - Build related stuff
+- **release** - Used to mark a release
 
 ## Table of Contents
 1. [Webflux and Reactive](#webflux-and-reactive)

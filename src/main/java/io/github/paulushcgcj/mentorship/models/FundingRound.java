@@ -1,14 +1,15 @@
 package io.github.paulushcgcj.mentorship.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.Currency;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import lombok.*;
 
 @Data
 @NoArgsConstructor

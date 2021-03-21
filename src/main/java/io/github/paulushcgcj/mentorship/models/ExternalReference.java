@@ -1,11 +1,11 @@
 package io.github.paulushcgcj.mentorship.models;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
+import java.net.URL;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
 
-import java.net.URL;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
