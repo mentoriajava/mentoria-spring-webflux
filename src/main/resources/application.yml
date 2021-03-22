@@ -1,1 +1,4 @@
-
+io:
+  github:
+    paulushcgcj:
+      stub: ./stubs/companies_db.json

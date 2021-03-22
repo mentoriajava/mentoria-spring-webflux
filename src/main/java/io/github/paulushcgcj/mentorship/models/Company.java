@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,10 @@ public class Company {
   private String category;
   private Long employees;
   private LocalDate foundation;
+  private BigDecimal raisedMoney;
+
+  private ZonedDateTime created;
+  private ZonedDateTime updated;
   private IPO ipo;
 
   @Singular
@@ -40,9 +45,6 @@ public class Company {
 
   @Singular
   private List<String> aliases;
-
-  private ZonedDateTime created;
-  private ZonedDateTime updated;
 
   @Singular
   private List<VisualAsset> assets;
@@ -58,8 +60,6 @@ public class Company {
 
   @Singular
   private List<Providership> providerships;
-
-  private BigDecimal raisedMoney;
 
   @Singular
   private List<FundingRound> fundingRounds;
@@ -90,4 +90,18 @@ public class Company {
   @Singular
   private List<Partner> partners;
 
+  public static List<String> comparingFields() {
+    return Arrays.asList(
+      "name",
+      "description",
+      "overview",
+      "email",
+      "phone",
+      "permalink",
+      "category",
+      "employees",
+      "foundation",
+      "raisedMoney"
+    );
+  }
 }
