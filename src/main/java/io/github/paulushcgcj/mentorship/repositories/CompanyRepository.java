@@ -1,4 +1,4 @@
-package io.github.paulushcgcj.mentorship;
+package io.github.paulushcgcj.mentorship.repositories;
 
 import java.io.IOException;
 import java.nio.file.Path;

@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import io.github.paulushcgcj.mentorship.CompanyRepository;
+import io.github.paulushcgcj.mentorship.repositories.CompanyRepository;
 import io.github.paulushcgcj.mentorship.exceptions.CompanyNotFoundException;
 import io.github.paulushcgcj.mentorship.models.Company;
 import lombok.AllArgsConstructor;

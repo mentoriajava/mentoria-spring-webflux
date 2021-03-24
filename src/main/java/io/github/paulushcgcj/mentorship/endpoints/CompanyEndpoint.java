@@ -2,6 +2,7 @@ package io.github.paulushcgcj.mentorship.endpoints;
 
 import java.util.List;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/api/companies")
 @AllArgsConstructor
+@Profile("annotation")
 public class CompanyEndpoint {
 
   private final CompanyService service;
