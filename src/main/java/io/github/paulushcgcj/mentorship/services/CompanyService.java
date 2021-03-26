@@ -1,7 +1,6 @@
 package io.github.paulushcgcj.mentorship.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -10,6 +9,7 @@ import io.github.paulushcgcj.mentorship.exceptions.CompanyNotFoundException;
 import io.github.paulushcgcj.mentorship.models.Company;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Mono;
 
 @Service
 @Slf4j
@@ -18,29 +18,28 @@ public class CompanyService {
 
   private final CompanyRepository repository;
 
-  public List<Company> listCompanies(final int page, final int size, final String... sort) {
+  public Mono<List<Company>> listCompanies(final int page, final int size, final String... sort) {
     return repository.listCompanies(page, size, sort);
   }
 
-  public Optional<Company> getCompany(String companyId) {
-    return Optional.ofNullable(repository.findById(companyId));
+  public Mono<Company> getCompany(String companyId) {
+    return repository.findById(companyId);
   }
 
-  public void updateCompany(Company company) throws CompanyNotFoundException {
-    Company updatedCompany =
-    Optional
-      .ofNullable(repository.findById(company.getId()))
-      .map(existingCompany -> repository.save(company))
-      .orElseThrow(() -> new CompanyNotFoundException(company.getId()));
-    log.info("Company {} was updated",updatedCompany.getName());
+  public Mono<Company> updateCompany(Company company) {
+    return
+      repository
+        .findById(company.getId())
+        .switchIfEmpty(Mono.error(new CompanyNotFoundException(company.getId())))
+        .flatMap(existingCompany -> repository.save(company));
   }
 
-  public Company addCompany(Company company) {
+  public Mono<Company> addCompany(Company company) {
     return repository.save(company);
   }
 
-  public void removeCompany(String companyId) throws CompanyNotFoundException {
-    repository.remove(companyId);
+  public Mono<Void> removeCompany(String companyId) throws CompanyNotFoundException {
+    return repository.remove(companyId);
   }
 
 }

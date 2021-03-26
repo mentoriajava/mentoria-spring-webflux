@@ -19,6 +19,7 @@ import io.github.paulushcgcj.mentorship.exceptions.CompanyNotFoundException;
 import io.github.paulushcgcj.mentorship.models.Company;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Mono;
 
 @Repository
 @Slf4j
@@ -38,9 +39,9 @@ public class CompanyRepository {
 
     try {
       stubbedCompanies = new ArrayList<>(List.of(
-          mapper
-            .readValue(stubFile.normalize().toFile(), Company[].class)
-        ));
+        mapper
+          .readValue(stubFile.normalize().toFile(), Company[].class)
+      ));
     } catch (IOException e) {
       log.error("Error while loading stub file {}", stubFile, e);
       stubbedCompanies = new ArrayList<>();
@@ -49,39 +50,43 @@ public class CompanyRepository {
     log.info("Loaded {} stubbed entries", stubbedCompanies.size());
   }
 
-  public List<Company> listCompanies(final int page, final int size, final String... sort) {
+  public Mono<List<Company>> listCompanies(final int page, final int size, final String... sort) {
     return
-      stubbedCompanies
-        .stream()
-        .sorted(companySorter(sort))
-        .skip((long) page * size)
-        .limit(size)
-        .collect(Collectors.toList());
+      Mono.just(
+        stubbedCompanies
+          .stream()
+          .sorted(companySorter(sort))
+          .skip((long) page * size)
+          .limit(size)
+          .collect(Collectors.toList())
+      );
   }
 
-  public Company findById(String companyId) {
+  public Mono<Company> findById(String companyId) {
     return
-      stubbedCompanies
-        .stream()
-        .filter(company -> company.getId().equals(companyId))
-        .findFirst()
-        .orElse(null);
+      Mono.justOrEmpty(
+        stubbedCompanies
+          .stream()
+          .filter(company -> company.getId().equals(companyId))
+          .findFirst()
+      ).switchIfEmpty(Mono.error(new CompanyNotFoundException(companyId)));
   }
 
-  public Company save(Company company) {
+  public Mono<Company> save(Company company) {
     if (StringUtils.isNotBlank(company.getId())) {
       stubbedCompanies.removeIf(company1 -> company1.getId().equals(company.getId()));
       stubbedCompanies.add(company);
-      return company;
+      return Mono.just(company);
     } else {
       stubbedCompanies.add(company.withId(idGen()));
-      return company.withId(idGen());
+      return Mono.just(company.withId(idGen()));
     }
   }
 
-  public void remove(String companyId) throws CompanyNotFoundException {
+  public Mono<Void> remove(String companyId) {
     if (!stubbedCompanies.removeIf(company -> company.getId().equals(companyId)))
-      throw new CompanyNotFoundException(companyId);
+      return Mono.error(new CompanyNotFoundException(companyId));
+    return Mono.empty();
   }
 
   /* Methods used to operate on the stubs*/
