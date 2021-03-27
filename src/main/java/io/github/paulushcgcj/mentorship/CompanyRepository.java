@@ -1,24 +1,24 @@
 package io.github.paulushcgcj.mentorship;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.annotation.PostConstruct;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.paulushcgcj.mentorship.exceptions.CompanyNotFoundException;
+import io.github.paulushcgcj.mentorship.models.Company;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import io.github.paulushcgcj.mentorship.exceptions.CompanyNotFoundException;
-import io.github.paulushcgcj.mentorship.models.Company;
-import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Repository
 @Slf4j
@@ -38,9 +38,9 @@ public class CompanyRepository {
 
     try {
       stubbedCompanies = new ArrayList<>(List.of(
-          mapper
-            .readValue(stubFile.normalize().toFile(), Company[].class)
-        ));
+        mapper
+          .readValue(stubFile.normalize().toFile(), Company[].class)
+      ));
     } catch (IOException e) {
       log.error("Error while loading stub file {}", stubFile, e);
       stubbedCompanies = new ArrayList<>();

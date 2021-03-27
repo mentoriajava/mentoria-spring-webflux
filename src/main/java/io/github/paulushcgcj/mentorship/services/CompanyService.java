@@ -1,15 +1,14 @@
 package io.github.paulushcgcj.mentorship.services;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.stereotype.Service;
-
 import io.github.paulushcgcj.mentorship.CompanyRepository;
 import io.github.paulushcgcj.mentorship.exceptions.CompanyNotFoundException;
 import io.github.paulushcgcj.mentorship.models.Company;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
