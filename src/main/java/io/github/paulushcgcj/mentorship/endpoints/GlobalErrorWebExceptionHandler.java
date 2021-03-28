@@ -1,6 +1,7 @@
 package io.github.paulushcgcj.mentorship.endpoints;
 
 import io.github.paulushcgcj.mentorship.exceptions.MentorshipBaseException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
@@ -16,9 +17,11 @@ import org.springframework.web.reactive.function.server.*;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;
+import java.util.Objects;
 
 @Component
 @Order(-2)
+@Slf4j
 public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHandler {
 
   public GlobalErrorWebExceptionHandler(
@@ -36,11 +39,10 @@ public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHan
     return RouterFunctions.route(RequestPredicates.all(), this::genericErrorHandler);
   }
 
-  private Mono<ServerResponse> renderErrorResponse(ServerRequest request) {
+  private Mono<ServerResponse> genericErrorHandler(ServerRequest request) {
 
-    Map<String, Object> errorAttributes = getErrorAttributes(request, ErrorAttributeOptions.defaults());
-    Throwable generatedException = getError(request).getCause();
-
+    Map<String, Object> errorPropertiesMap = getErrorAttributes(request,ErrorAttributeOptions.defaults());
+    Throwable generatedException = extractError(getError(request));
     if (generatedException instanceof MentorshipBaseException) {
       MentorshipBaseException exception = (MentorshipBaseException) generatedException;
       return ServerResponse
@@ -48,25 +50,25 @@ public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHan
         .contentType(MediaType.APPLICATION_JSON)
         .body(BodyInserters.fromValue(exception.getMessage()));
     }
+
     return
       ServerResponse
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .contentType(MediaType.APPLICATION_JSON)
-        .body(BodyInserters.fromValue(String.valueOf(errorAttributes.get("message"))));
+      .status(resolveHttpStatus(errorPropertiesMap))
+      .contentType(MediaType.APPLICATION_JSON)
+      .body(BodyInserters.fromValue(errorPropertiesMap.get("message")));
 
   }
 
-  private Mono<ServerResponse> genericErrorHandler(ServerRequest request) {
+  private Throwable extractError(Throwable originalError){
+    log.error("Loaded original error -> {}",originalError.getMessage());
+    if(originalError.getCause() != null){
+      return extractError(originalError.getCause());
+    }
+    return originalError;
+  }
 
-    Map<String, Object> errorPropertiesMap = getErrorAttributes(request,
-      ErrorAttributeOptions.defaults());
-
-    return
-      ServerResponse
-      .status(HttpStatus.BAD_REQUEST)
-      .contentType(MediaType.APPLICATION_JSON)
-      .body(BodyInserters.fromValue(errorPropertiesMap));
-
+  private HttpStatus resolveHttpStatus(Map<String, Object> errorPropertiesMap) {
+    return HttpStatus.resolve(Integer.parseInt(String.valueOf(errorPropertiesMap.getOrDefault("status", "500"))));
   }
 
 }
