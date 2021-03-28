@@ -17,7 +17,6 @@ import org.springframework.web.reactive.function.server.*;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;
-import java.util.Objects;
 
 @Component
 @Order(-2)
@@ -41,7 +40,7 @@ public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHan
 
   private Mono<ServerResponse> genericErrorHandler(ServerRequest request) {
 
-    Map<String, Object> errorPropertiesMap = getErrorAttributes(request,ErrorAttributeOptions.defaults());
+    Map<String, Object> errorPropertiesMap = getErrorAttributes(request, ErrorAttributeOptions.defaults());
     Throwable generatedException = extractError(getError(request));
     if (generatedException instanceof MentorshipBaseException) {
       MentorshipBaseException exception = (MentorshipBaseException) generatedException;
@@ -53,15 +52,15 @@ public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHan
 
     return
       ServerResponse
-      .status(resolveHttpStatus(errorPropertiesMap))
-      .contentType(MediaType.APPLICATION_JSON)
-      .body(BodyInserters.fromValue(errorPropertiesMap.get("message")));
+        .status(resolveHttpStatus(errorPropertiesMap))
+        .contentType(MediaType.APPLICATION_JSON)
+        .body(BodyInserters.fromValue(errorPropertiesMap.get("message")));
 
   }
 
-  private Throwable extractError(Throwable originalError){
-    log.error("Loaded original error -> {}",originalError.getMessage());
-    if(originalError.getCause() != null){
+  private Throwable extractError(Throwable originalError) {
+    log.error("Loaded original error -> {}", originalError.getMessage());
+    if (originalError.getCause() != null) {
       return extractError(originalError.getCause());
     }
     return originalError;
