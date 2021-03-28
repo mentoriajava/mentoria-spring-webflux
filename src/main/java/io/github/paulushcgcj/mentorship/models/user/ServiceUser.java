@@ -6,6 +6,8 @@ import lombok.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -28,4 +30,13 @@ public class ServiceUser implements IdentifiableEntry<ServiceUser> {
   private ImagesInformation picture;
   private String nat;
 
+
+  public static List<String> comparingFields() {
+    return Arrays.asList(
+      "name",
+      "email",
+      "nat",
+      "gender"
+    );
+  }
 }
