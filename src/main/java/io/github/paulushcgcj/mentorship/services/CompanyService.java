@@ -3,7 +3,6 @@ package io.github.paulushcgcj.mentorship.services;
 import io.github.paulushcgcj.mentorship.exceptions.EntryNotFoundException;
 import io.github.paulushcgcj.mentorship.models.company.Company;
 import io.github.paulushcgcj.mentorship.repositories.GenericFileRepository;
-import io.github.paulushcgcj.mentorship.utils.StubbingUtils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanComparator;
@@ -14,6 +13,7 @@ import reactor.core.publisher.Mono;
 import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 @Service
@@ -62,7 +62,7 @@ public class CompanyService {
         Stream
           .of(sort)
           .filter(paramName -> Company.comparingFields().contains(paramName))
-          .map(paramName -> new BeanComparator<Company>(StubbingUtils.getMethod(paramName)))
+          .map((Function<String, BeanComparator<Company>>) BeanComparator::new)
           .map(beanComparator -> (Comparator<Company>) beanComparator)
           .reduce((c1, c2) -> c1.reversed().thenComparing(c2.reversed()))
           .orElse(Comparator.comparing(Company::getId));
