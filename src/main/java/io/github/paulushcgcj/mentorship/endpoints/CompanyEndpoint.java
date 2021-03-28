@@ -1,7 +1,7 @@
 package io.github.paulushcgcj.mentorship.endpoints;
 
-import io.github.paulushcgcj.mentorship.exceptions.CompanyNotFoundException;
-import io.github.paulushcgcj.mentorship.models.Company;
+import io.github.paulushcgcj.mentorship.exceptions.EntryNotFoundException;
+import io.github.paulushcgcj.mentorship.models.company.Company;
 import io.github.paulushcgcj.mentorship.services.CompanyService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Profile;
@@ -30,7 +30,7 @@ public class CompanyEndpoint {
   }
 
   @GetMapping("/{companyId}")
-  public Mono<Company> getCompany(@PathVariable String companyId) throws CompanyNotFoundException {
+  public Mono<Company> getCompany(@PathVariable String companyId) throws EntryNotFoundException {
     return service.getCompany(companyId);
   }
 
@@ -65,7 +65,7 @@ public class CompanyEndpoint {
 
   @DeleteMapping("/{companyId}")
   @ResponseStatus(HttpStatus.ACCEPTED)
-  public Mono<Void> removeCompany(@PathVariable String companyId) throws CompanyNotFoundException {
+  public Mono<Void> removeCompany(@PathVariable String companyId) throws EntryNotFoundException {
     return service.removeCompany(companyId);
   }
 

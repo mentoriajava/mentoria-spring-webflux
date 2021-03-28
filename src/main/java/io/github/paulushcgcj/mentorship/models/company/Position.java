@@ -1,4 +1,4 @@
-package io.github.paulushcgcj.mentorship.models;
+package io.github.paulushcgcj.mentorship.models.company;
 
 import java.math.BigDecimal;
 

@@ -1,4 +1,4 @@
-package io.github.paulushcgcj.mentorship.models;
+package io.github.paulushcgcj.mentorship.models.company;
 
 import java.math.BigDecimal;
 import java.net.URL;
@@ -11,6 +11,7 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import io.github.paulushcgcj.mentorship.models.IdentifiableEntry;
 import lombok.*;
 
 @Data
@@ -20,7 +21,7 @@ import lombok.*;
 @With
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Company {
+public class Company implements IdentifiableEntry<Company> {
   private String id;
   private String name;
   private String description;

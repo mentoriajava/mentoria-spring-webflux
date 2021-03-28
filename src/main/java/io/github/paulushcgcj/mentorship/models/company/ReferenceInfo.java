@@ -1,4 +1,4 @@
-package io.github.paulushcgcj.mentorship.models;
+package io.github.paulushcgcj.mentorship.models.company;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -12,7 +12,7 @@ import lombok.*;
 @With
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Embeddable {
-  private String code;
-  private String description;
+public class ReferenceInfo {
+  private String name;
+  private String permalink;
 }

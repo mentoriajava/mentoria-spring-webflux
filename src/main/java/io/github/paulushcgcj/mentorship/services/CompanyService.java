@@ -1,25 +1,37 @@
 package io.github.paulushcgcj.mentorship.services;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
-import io.github.paulushcgcj.mentorship.repositories.CompanyRepository;
-import io.github.paulushcgcj.mentorship.exceptions.CompanyNotFoundException;
-import io.github.paulushcgcj.mentorship.models.Company;
-import lombok.AllArgsConstructor;
+import io.github.paulushcgcj.mentorship.exceptions.EntryNotFoundException;
+import io.github.paulushcgcj.mentorship.models.company.Company;
+import io.github.paulushcgcj.mentorship.repositories.GenericFileRepository;
+import io.github.paulushcgcj.mentorship.utils.StubbingUtils;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.beanutils.BeanComparator;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+
+import java.nio.file.Path;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 @Slf4j
-@AllArgsConstructor
 public class CompanyService {
 
-  private final CompanyRepository repository;
+  private final GenericFileRepository<Company> repository;
+
+  public CompanyService(
+    GenericFileRepository<Company> repository,
+    @Value("${io.github.paulushcgcj.stub.company}") Path stubFile
+  ) {
+    this.repository = repository;
+    this.repository.setUp(stubFile, Company.class);
+  }
 
   public Mono<List<Company>> listCompanies(final int page, final int size, final String... sort) {
-    return repository.listCompanies(page, size, sort);
+    return repository.listEntries(page, size, companySorter(sort));
   }
 
   public Mono<Company> getCompany(String companyId) {
@@ -30,7 +42,7 @@ public class CompanyService {
     return
       repository
         .findById(company.getId())
-        .switchIfEmpty(Mono.error(new CompanyNotFoundException(company.getId())))
+        .switchIfEmpty(Mono.error(new EntryNotFoundException(company.getId())))
         .flatMap(existingCompany -> repository.save(company));
   }
 
@@ -38,8 +50,25 @@ public class CompanyService {
     return repository.save(company);
   }
 
-  public Mono<Void> removeCompany(String companyId) throws CompanyNotFoundException {
+  public Mono<Void> removeCompany(String companyId) throws EntryNotFoundException {
     return repository.remove(companyId);
+  }
+
+  /* Methods used to operate on the stubs*/
+  @SneakyThrows
+  private Comparator<Company> companySorter(final String... sort) {
+    if (sort != null) {
+      return
+        Stream
+          .of(sort)
+          .filter(paramName -> Company.comparingFields().contains(paramName))
+          .map(paramName -> new BeanComparator<Company>(StubbingUtils.getMethod(paramName)))
+          .map(beanComparator -> (Comparator<Company>) beanComparator)
+          .reduce((c1, c2) -> c1.reversed().thenComparing(c2.reversed()))
+          .orElse(Comparator.comparing(Company::getId));
+    }
+
+    return Comparator.comparing(Company::getId).reversed();
   }
 
 }

@@ -1,4 +1,6 @@
-package io.github.paulushcgcj.mentorship.models;
+package io.github.paulushcgcj.mentorship.models.company;
+
+import java.net.URL;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -12,7 +14,7 @@ import lombok.*;
 @With
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ReferenceInfo {
-  private String name;
-  private String permalink;
+public class ExternalReference {
+  private URL external;
+  private String title;
 }

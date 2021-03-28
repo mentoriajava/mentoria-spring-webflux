@@ -1,9 +1,7 @@
-package io.github.paulushcgcj.mentorship.models;
+package io.github.paulushcgcj.mentorship.models.company;
 
-import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Currency;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -17,12 +15,16 @@ import lombok.*;
 @With
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Acquisition {
-  private BigDecimal amount;
-  private Currency currency;
-  private String termCode;
-  private URL source;
-  private String sourceDescription;
+public class Milestone {
+  private Long id;
+  private String description;
   private LocalDate date;
-  private ReferenceInfo acquiringCompany;
+  private URL source;
+  private String sourceText;
+  private String sourceDescription;
+  private String type;
+  private String stoned;
+  private String stonedType;
+  private ReferenceInfo acquirer;
+  private ReferenceInfo stoneable;
 }
