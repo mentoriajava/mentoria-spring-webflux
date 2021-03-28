@@ -7,7 +7,6 @@ import io.github.paulushcgcj.mentorship.utils.StubbingUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
 import java.nio.file.Path;
@@ -18,9 +17,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Repository
 @Slf4j
-public class GenericFileRepository<T extends IdentifiableEntry<T>> {
+public abstract class GenericFileRepository<T extends IdentifiableEntry<T>> {
 
   @Autowired
   private ObjectMapper mapper;
@@ -33,7 +31,7 @@ public class GenericFileRepository<T extends IdentifiableEntry<T>> {
     Function<Object, T> singleParse = entry -> {
       try {
         T parsedEntry = mapper.readValue(mapper.writeValueAsString(entry), tClass);
-        if(StringUtils.isBlank(parsedEntry.getId()))
+        if (StringUtils.isBlank(parsedEntry.getId()))
           return parsedEntry.withId(StubbingUtils.idGen());
         return parsedEntry;
       } catch (Exception e) {
