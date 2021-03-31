@@ -1,13 +1,14 @@
 package io.github.paulushcgcj.mentorship.endpoints;
 
-import lombok.AllArgsConstructor;
+import java.security.Principal;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
 
-import java.security.Principal;
+import lombok.AllArgsConstructor;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/api")
