@@ -45,8 +45,17 @@ The possible values for types are:
 
 ## Table of Contents
 1. [Webflux and Reactive](#webflux-and-reactive)
+2. [Authenticating and security](#authenticating-and-security)
 
 ## Webflux and reactive
 
 To work with spring webflux, we will create a couple of endpoints to execute a basic CRUD of our company (all mocked up obviously), with a couple of validations, including the possibility of bulk submitting data and enabling multi format responses (JSON, XML and others).
 This will serve as a base for everything, we will have some profile based approaches, some profiles to play around with annotation based and functional based.
+
+## Authenticating and security
+
+This topic will introduce the usage of spring security, and add role-based access. Also, we will use annotations to limit the scope of access of some users. 
+We will start with a dummy user, and then we will move forward in order to use a database based authentication. 
+We will read, write and update the user data in our database to manage users with secure usernames.
+Next, we will make use of different types of authentication, from basic to JWT and OAuth2. 
+Also, we will use LDAP integration to be used as a source from our user and groups.
