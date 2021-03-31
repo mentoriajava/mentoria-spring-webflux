@@ -29,6 +29,7 @@
 	</properties>
 
 	<dependencies>
+		<!-- Spring boot dependencies -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
@@ -49,8 +50,7 @@
 			<version>1.9.4</version>
 		</dependency>
 
-
-
+		<!-- Test dependencies -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

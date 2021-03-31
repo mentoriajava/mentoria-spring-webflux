@@ -1,12 +1,13 @@
 package io.github.paulushcgcj.mentorship.services;
 
-import io.github.paulushcgcj.mentorship.models.company.Company;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import io.github.paulushcgcj.mentorship.models.company.Company;
 import reactor.test.StepVerifier;
 
 @SpringBootTest
