@@ -1,8 +1,10 @@
 package io.github.paulushcgcj.mentorship.models.user;
 
 import java.net.URI;
-import lombok.*;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
+
+import lombok.*;
 
 @Data
 @NoArgsConstructor

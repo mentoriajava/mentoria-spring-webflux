@@ -1,9 +1,9 @@
 package io.github.paulushcgcj.mentorship.models.user;
 
-import io.github.paulushcgcj.mentorship.models.company.Position;
-
-import lombok.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
+
+import io.github.paulushcgcj.mentorship.models.company.Position;
+import lombok.*;
 
 @Data
 @NoArgsConstructor

@@ -1,13 +1,14 @@
 
 package io.github.paulushcgcj.mentorship.models.user;
 
-import io.github.paulushcgcj.mentorship.models.IdentifiableEntry;
-import lombok.*;
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import io.github.paulushcgcj.mentorship.models.IdentifiableEntry;
+import lombok.*;
 
 @Data
 @NoArgsConstructor

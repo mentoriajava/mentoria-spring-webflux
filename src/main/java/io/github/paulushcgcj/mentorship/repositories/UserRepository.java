@@ -1,7 +1,8 @@
 package io.github.paulushcgcj.mentorship.repositories;
 
-import io.github.paulushcgcj.mentorship.models.user.ServiceUser;
 import org.springframework.stereotype.Repository;
+
+import io.github.paulushcgcj.mentorship.models.user.ServiceUser;
 
 @Repository
 public class UserRepository extends GenericFileRepository<ServiceUser> {

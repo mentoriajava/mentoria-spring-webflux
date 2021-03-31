@@ -1,9 +1,10 @@
 package io.github.paulushcgcj.mentorship.models.user;
 
-import lombok.*;
+import java.util.UUID;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.util.UUID;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
