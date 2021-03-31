@@ -42,17 +42,22 @@ public abstract class GenericFileRepository<T extends IdentifiableEntry<T>> {
       return null;
     };
 
-    try {
-      Object[] readMe = mapper.readValue(stubFile.normalize().toFile(), Object[].class);
+    if(stubFile.normalize().toFile().exists()) {
+      try {
+        Object[] readMe = mapper.readValue(stubFile.normalize().toFile(), Object[].class);
 
-      stubbedData =
-        Stream
-          .of(readMe)
-          .map(singleParse)
-          .collect(Collectors.toList());
+        stubbedData =
+          Stream
+            .of(readMe)
+            .map(singleParse)
+            .collect(Collectors.toList());
 
-    } catch (Exception e) {
-      log.error("Error while loading stub file {}", stubFile, e);
+      } catch (Exception e) {
+        log.error("Error while loading stub file {}", stubFile, e);
+        stubbedData = new ArrayList<>();
+      }
+    }else{
+      log.error("No stub file found with path {}, starting empty", stubFile);
       stubbedData = new ArrayList<>();
     }
 

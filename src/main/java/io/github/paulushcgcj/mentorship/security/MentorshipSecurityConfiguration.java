@@ -8,7 +8,9 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.web.server.csrf.ServerCsrfTokenRepository;
 
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
@@ -37,11 +39,8 @@ public class MentorshipSecurityConfiguration {
         .pathMatchers("/api/companies").hasAnyRole("READER")
         .anyExchange().authenticated()
         .and().httpBasic()
-        .and()
+        .and().csrf().disable()
         .build();
   }
-
-
-
 
 }
