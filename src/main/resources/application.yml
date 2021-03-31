@@ -1,4 +1,6 @@
 io:
   github:
     paulushcgcj:
-      stub: ./stubs/companies_db.json
+      stub:
+        company: ./stubs/companies_db.json
+        user: ./stubs/users_db.json

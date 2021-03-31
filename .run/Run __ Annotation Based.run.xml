@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run :: Annotation Based" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="io.github.paulushcgcj.mentorship.MentorshipWebfluxApplication" />
+    <module name="mentorship-webflux" />
+    <option name="PROGRAM_PARAMETERS" value="--spring.profiles.active=annotation" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="io.github.paulushcgcj.mentorship.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
