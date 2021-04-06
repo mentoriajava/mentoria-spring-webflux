@@ -4,3 +4,16 @@ io:
       stub:
         company: ./stubs/companies_db.json
         user: ./stubs/users_db.json
+
+spring:
+  main:
+    lazy-initialization: true
+    banner-mode: "off"
+  datasource:
+    url: jdbc:mysql://127.0.0.1/mentoria?createDatabaseIfNotExist=true
+    username: root
+    password: root
+  data:
+    jpa:
+      repositories:
+        enabled: true
