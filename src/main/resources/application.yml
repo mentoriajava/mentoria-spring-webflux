@@ -7,7 +7,6 @@ io:
 
 spring:
   main:
-    lazy-initialization: true
     banner-mode: "off"
   datasource:
     url: jdbc:mysql://127.0.0.1/mentoria?createDatabaseIfNotExist=true
