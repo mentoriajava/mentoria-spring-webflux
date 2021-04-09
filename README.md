@@ -43,10 +43,6 @@ The possible values for types are:
 - **build** - Build related stuff
 - **release** - Used to mark a release
 
-## Table of Contents
-1. [Webflux and Reactive](#webflux-and-reactive)
+## Follow along
 
-## Webflux and reactive
-
-To work with spring webflux, we will create a couple of endpoints to execute a basic CRUD of our company (all mocked up obviously), with a couple of validations, including the possibility of bulk submitting data and enabling multi format responses (JSON, XML and others).
-This will serve as a base for everything, we will have some profile based approaches, some profiles to play around with annotation based and functional based.
+To follow this repo and its documentation, check out [our documentation](https://mentoriajava.github.io/mentoria-spring-webflux/).
