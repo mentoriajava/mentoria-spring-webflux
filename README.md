@@ -45,7 +45,7 @@ The possible values for types are:
 
 ## Table of Contents
 1. [Webflux and Reactive](#webflux-and-reactive)
-2. [Authenticating and security](#authenticating-and-security)
+3. [Authenticating and security](#authenticating-and-security)
 
 ## Webflux and reactive
 
