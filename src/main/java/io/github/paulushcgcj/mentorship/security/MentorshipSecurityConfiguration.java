@@ -1,7 +1,7 @@
 package io.github.paulushcgcj.mentorship.security;
 
 import io.github.paulushcgcj.mentorship.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -11,9 +11,9 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
+@AllArgsConstructor
 public class MentorshipSecurityConfiguration {
 
-  @Autowired
   private UserRepository userRepository;
 
   @Bean

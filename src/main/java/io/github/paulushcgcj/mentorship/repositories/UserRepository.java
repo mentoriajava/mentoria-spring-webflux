@@ -2,7 +2,7 @@ package io.github.paulushcgcj.mentorship.repositories;
 
 import io.github.paulushcgcj.mentorship.models.user.ServiceUser;
 import io.github.paulushcgcj.mentorship.models.user.UserGroup;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
@@ -12,18 +12,13 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
-import java.util.stream.Stream;
 
 @Repository
+@AllArgsConstructor
 public class UserRepository extends GenericFileRepository<ServiceUser> {
 
   private UserPrincipalRepository repository;
   private Environment environment;
-
-  public UserRepository(@Autowired UserPrincipalRepository repository, @Autowired Environment environment) {
-    this.repository = repository;
-    this.environment = environment;
-  }
 
   public Mono<UserDetails> findByUsername(String username) {
     if(Arrays.asList(environment.getActiveProfiles()).contains("filesystem"))

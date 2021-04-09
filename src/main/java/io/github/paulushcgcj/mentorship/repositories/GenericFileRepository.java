@@ -4,9 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.paulushcgcj.mentorship.exceptions.EntryNotFoundException;
 import io.github.paulushcgcj.mentorship.models.IdentifiableEntry;
 import io.github.paulushcgcj.mentorship.utils.StubbingUtils;
+import lombok.AllArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Mono;
 
 import java.nio.file.Path;
@@ -22,8 +23,8 @@ import java.util.stream.Stream;
 @Slf4j
 public abstract class GenericFileRepository<T extends IdentifiableEntry<T>> {
 
-  @Autowired
-  private ObjectMapper mapper;
+  @Setter
+  protected ObjectMapper mapper;
 
   private List<T> stubbedData;
 
@@ -117,6 +118,5 @@ public abstract class GenericFileRepository<T extends IdentifiableEntry<T>> {
       return Mono.error(new EntryNotFoundException(id));
     return Mono.empty();
   }
-
 
 }
