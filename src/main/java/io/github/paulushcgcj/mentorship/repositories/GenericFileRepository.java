@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.paulushcgcj.mentorship.exceptions.EntryNotFoundException;
 import io.github.paulushcgcj.mentorship.models.IdentifiableEntry;
 import io.github.paulushcgcj.mentorship.utils.StubbingUtils;
-import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

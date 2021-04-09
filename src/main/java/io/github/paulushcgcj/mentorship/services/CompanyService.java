@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.beanutils.BeanComparator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -25,9 +26,11 @@ public class CompanyService {
 
   public CompanyService(
     GenericFileRepository<Company> repository,
-    @Value("${io.github.paulushcgcj.stub.company}") Path stubFile
+    @Value("${io.github.paulushcgcj.stub.company}") Path stubFile,
+    ObjectMapper mapper
   ) {
     this.repository = repository;
+    this.repository.setMapper(mapper);
     this.repository.setUp(stubFile, Company.class);
   }
 
