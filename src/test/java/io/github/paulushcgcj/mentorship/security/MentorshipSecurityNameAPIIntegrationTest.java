@@ -29,7 +29,7 @@ class MentorshipSecurityNameAPIIntegrationTest {
 			.exchange()
 			.expectStatus().isOk()
 			.expectBody(String.class)
-			.isEqualTo(null);
+			.isEqualTo("Hello but you didn't told me your name!");
 	}
 
 	@Test
@@ -41,7 +41,7 @@ class MentorshipSecurityNameAPIIntegrationTest {
 			.exchange()
 			.expectStatus().isOk()
 			.expectBody(String.class)
-			.isEqualTo(null);
+			.isEqualTo("Hello but you didn't told me your name!");
 	}
 
 }
