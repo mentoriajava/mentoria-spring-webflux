@@ -4,6 +4,9 @@ io:
       stub:
         company: ./stubs/companies_db.json
         user: ./stubs/users_db.json
+      security:
+        secret: iamasecurepassword
+        expire: 5m
 
 spring:
   main:
