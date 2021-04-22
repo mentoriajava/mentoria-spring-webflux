@@ -3,6 +3,7 @@ package io.github.paulushcgcj.mentorship.repositories;
 import io.github.paulushcgcj.mentorship.models.user.ServiceUser;
 import io.github.paulushcgcj.mentorship.models.user.UserGroup;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
@@ -15,12 +16,14 @@ import java.util.function.UnaryOperator;
 
 @Repository
 @AllArgsConstructor
+@Slf4j
 public class UserRepository extends GenericFileRepository<ServiceUser> {
 
   private UserPrincipalRepository repository;
   private Environment environment;
 
   public Mono<UserDetails> findByUsername(String username) {
+    log.info("Looking up by username");
     if(Arrays.asList(environment.getActiveProfiles()).contains("filesystem"))
       return findBy(usernameFilter(username),fakePassword()).map(ServiceUser::getLogin);
     return Mono.justOrEmpty(repository.findByUsername(username));

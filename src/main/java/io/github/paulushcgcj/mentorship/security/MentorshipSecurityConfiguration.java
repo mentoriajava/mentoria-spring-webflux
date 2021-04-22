@@ -1,18 +1,16 @@
 package io.github.paulushcgcj.mentorship.security;
 
-import io.github.paulushcgcj.mentorship.filters.LoggedWebFilter;
 import io.github.paulushcgcj.mentorship.filters.LoginWebFilter;
-import io.github.paulushcgcj.mentorship.repositories.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.codec.ServerCodecConfigurer;
-import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
+import org.springframework.security.oauth2.jwt.NimbusReactiveJwtDecoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository;
 
@@ -21,23 +19,18 @@ import org.springframework.security.web.server.context.NoOpServerSecurityContext
 @AllArgsConstructor
 public class MentorshipSecurityConfiguration {
 
-  private UserRepository userRepository;
-  private JsonWebTokenService jwtService;
-
-  @Bean
-  public ReactiveUserDetailsService userDetailsService() {
-    return username -> userRepository.findByUsername(username);
-  }
-
-  @Bean
-  public UserDetailsRepositoryReactiveAuthenticationManager authenticationManager() {
-    return new UserDetailsRepositoryReactiveAuthenticationManager(userDetailsService());
+  public KeycloakReactiveAuthenticationManager authenticationManager(String issuerUrl, String clientId, String clientSecret) {
+    return new KeycloakReactiveAuthenticationManager(issuerUrl, clientId, clientSecret);
   }
 
   @Bean
   public SecurityWebFilterChain filterChain(
     ServerHttpSecurity httpSecurity,
-    ServerCodecConfigurer serverCodecConfigurer
+    ServerCodecConfigurer serverCodecConfigurer,
+    @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}") String jwkSetUri,
+    @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}") String issuerUrl,
+    @Value("${spring.security.oauth2.client.registration.keycloak.client-id}") String clientId,
+    @Value("${spring.security.oauth2.client.registration.keycloak.client-secret}") String clientSecret
   ) {
     return
       httpSecurity
@@ -59,10 +52,14 @@ public class MentorshipSecurityConfiguration {
         .httpBasic().disable()
         .csrf().disable()
 
-        .addFilterAt(new LoginWebFilter(authenticationManager(), serverCodecConfigurer, jwtService), SecurityWebFiltersOrder.AUTHENTICATION)
-        .addFilterAt(new LoggedWebFilter(authenticationManager(), jwtService), SecurityWebFiltersOrder.LAST)
+        .addFilterAt(new LoginWebFilter(authenticationManager(issuerUrl, clientId, clientSecret), serverCodecConfigurer), SecurityWebFiltersOrder.AUTHENTICATION)
 
+        .oauth2ResourceServer()
+        .jwt()
+        .jwtDecoder(new NimbusReactiveJwtDecoder(jwkSetUri))
 
+        .and()
+        .and()
         .build();
   }
 

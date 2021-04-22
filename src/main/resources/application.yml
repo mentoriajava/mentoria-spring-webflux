@@ -7,6 +7,14 @@ io:
       security:
         secret: iamasecurepassword
         expire: 5m
+        publicKey: |
+          -----BEGIN PUBLIC KEY-----
+          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAg3WAQFzj7XCVfokbMIyzn8ES5jqrJDfLlfUaSv7mNKJiHi2YXAYQUTHmAJToiz/JPeaWgJXvXTEi5AjirP93thXPorzRK6QxtbuathdrUGhmUfPq18DSSw4xter3TefVR0ucHt2VcTB98g0Cq83fOndiB034LaUPTmZt6bDZjYY7jdk4h/zieVtI4O6KtpbbnZaHKR60rpsglk32AwcxZS9uzLL6Vd3Y7Bea69BpWdb6TpXji+uvvtbGBrXWcbwuCtrF/wZyI585zrj1cowoV/FkOYhY2oqUZV6v2LlkMz0hFJSZIqXWCqRv2Uk0EH7X0n3R6JE5cHu6vMMjz3lJbwIDAQAB
+          -----END PUBLIC KEY-----
+        privateKey: |
+          -----BEGIN PRIVATE KEY-----
+          MIICnTCCAYUCBgF47HdV7TANBgkqhkiG9w0BAQsFADASMRAwDgYDVQQDDAduaWNvbGxlMB4XDTIxMDQxOTIzMjcyN1oXDTMxMDQxOTIzMjkwN1owEjEQMA4GA1UEAwwHbmljb2xsZTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAIN1gEBc4+1wlX6JGzCMs5/BEuY6qyQ3y5X1Gkr+5jSiYh4tmFwGEFEx5gCU6Is/yT3mloCV710xIuQI4qz/d7YVz6K80SukMbW7mrYXa1BoZlHz6tfA0ksOMbXq903n1UdLnB7dlXEwffINAqvN3zp3YgdN+C2lD05mbemw2Y2GO43ZOIf84nlbSODuiraW252WhyketK6bIJZN9gMHMWUvbsyy+lXd2OwXmuvQaVnW+k6V44vrr77Wxga11nG8Lgraxf8GciOfOc649XKMKFfxZDmIWNqKlGVer9i5ZDM9IRSUmSKl1gqkb9lJNBB+19J90eiROXB7urzDI895SW8CAwEAATANBgkqhkiG9w0BAQsFAAOCAQEAQr8IpRza3S6UbVFinn9EHu9raXzmQdL9woFVDG/oMiMPI0D0FJU8rNgSZ6U/RcV7fW16BUPDJnXikSwZaReN3ZZPnOWlQ/+WIlLTh8VC/f7iwYPEb9Pz9Lm1JsUGLYliYqlStxZ4NHrOmRDsH2FOPrx6+O4q3eObuL0rb80bVGJANFKeXbZeqjDBS4Zq6YSm4Yuc4FOaxicGRPtD3nQt2Y9C1vnmUXB/uDBEMy9C2okT19hS14dLoEIxQHGJRoh77P5NUqENWBCIKbukjt8tFyMrbXxL/TUzr8EuQC+hXmqJMq+JymqViMn9Xd2CYbtrd3xEVnylMq5FzDmqyNu06w==
+          -----END PRIVATE KEY-----
 
 spring:
   main:
@@ -19,3 +27,17 @@ spring:
     jpa:
       repositories:
         enabled: true
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://127.0.0.1:18080/auth/realms/nicolle
+        registration:
+          keycloak:
+            client-id: mentorship
+            client-secret: 15c02b69-1a3e-43b8-a4e5-086ba7b1db00
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:18080/auth/realms/nicolle
+          jwk-set-uri: http://localhost:18080/auth/realms/nicolle/protocol/openid-connect/certs
